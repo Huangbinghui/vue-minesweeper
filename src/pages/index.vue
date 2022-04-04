@@ -17,7 +17,7 @@ const directions = [
   [-1, -1],
 ]
 
-const state = ref(Array.from({ length: HEIGHT }, (_, y) =>
+const state = reactive(Array.from({ length: HEIGHT }, (_, y) =>
   Array.from({ length: WIDTH },
     (_, x): BlockState => ({
       x, y, flagged: false, revealed: false, adjacentMines: 0,
