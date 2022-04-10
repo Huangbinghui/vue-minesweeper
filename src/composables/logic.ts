@@ -104,7 +104,7 @@ export class GamePlay {
       const x = Math.floor(Math.random() * this.width)
       const y = Math.floor(Math.random() * this.height)
       const block = this.board[y][x]
-      if (block.mine || block === initialBlock)
+      if (block.mine && (Math.abs(block.x - initialBlock.x) <= 1 || Math.abs(block.y - initialBlock.y) <= 1))
         continue
       block.mine = true
       mines--

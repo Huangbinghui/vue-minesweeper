@@ -60,7 +60,7 @@ function newGame(difficulty: 'easy' | 'medium' | 'hard') {
         />
       </div>
     </div>
-    <div flex="~ gap-1" justify-center>
+    <div v-if="false" flex="~ gap-1" justify-center>
       <button btn @click="toggleDev()">
         {{ isDev ? 'cheat' : 'normal' }}
       </button>
