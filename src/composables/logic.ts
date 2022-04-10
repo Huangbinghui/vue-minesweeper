@@ -20,10 +20,7 @@ interface GameState {
 export class GamePlay {
   state = ref() as Ref<GameState>
 
-  constructor(public width: number, public height: number) {
-    watch(this.state, () => {
-      this.checkGameState()
-    }, { immediate: false, deep: true })
+  constructor(public width: number, public height: number, public mines: number) {
     this.reset()
   }
 
@@ -95,14 +92,15 @@ export class GamePlay {
   }
 
   generateMines(initialBlock: BlockState) {
-    for (const row of this.board) {
-      for (const block of row) {
-        if (Math.abs(initialBlock.x - block.x) <= 1)
-          continue
-        if (Math.abs(initialBlock.y - block.y) <= 1)
-          continue
-        block.mine = Math.random() < 0.1
-      }
+    let mines = this.mines
+    while (mines > 0 && mines < this.height * this.width) {
+      const x = Math.floor(Math.random() * this.width)
+      const y = Math.floor(Math.random() * this.height)
+      const block = this.board[y][x]
+      if (block.mine || block === initialBlock)
+        continue
+      block.mine = true
+      mines--
     }
     this.mineGenerated = true
     this.updateNumbers()
@@ -158,7 +156,7 @@ export class GamePlay {
       }
       else {
         this.gameState = 'won'
-        alert('Win!!!')
+        alert('Won!!!')
       }
     }
   }

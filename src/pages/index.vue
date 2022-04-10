@@ -2,14 +2,18 @@
 import { isDev, toggleDev } from '~/composables'
 import { GamePlay } from '~/composables/logic'
 
-const play = new GamePlay(10, 10)
+const play = new GamePlay(10, 10, 20)
 useStorage('mineweeper-state', play.state)
 const state = computed(() => play.board)
+
+watchEffect(() => {
+  play.checkGameState()
+})
 </script>
 
 <template>
   <div>
-    Minesweeper
+    扫雷
     <div p5>
       <div
         v-for="row,y in state"
@@ -28,10 +32,10 @@ const state = computed(() => play.board)
     </div>
     <div flex="~ gap-1" justify-center>
       <button btn @click="toggleDev()">
-        {{ isDev }}
+        {{ isDev ? 'dev' : 'prod' }}
       </button>
       <button btn @click="play.reset()">
-        reset
+        重置
       </button>
     </div>
   </div>
